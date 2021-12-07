@@ -1,5 +1,7 @@
 package com.rapipay.transaction.services;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +56,46 @@ public class TransactionServicesImpl implements TransactionServices {
 	public List<Transaction> getAllTransaction() {
 		return transactionDao.findAll();
 	}
+	@Override
+	public List<Transaction> getTransactionByAgentId(Integer agentId) {
+		List<Transaction> list = new ArrayList<>();
+		list = this.transactionDao.findAll();
+		List<Transaction> transaction = new ArrayList<>();
+		for(Transaction t:list) {
+			if(t.getAgentId()==agentId) {
+				transaction.add(t);
+			}
+		}
+		
+		return transaction;
+	}
+
+	@Override
+	public String fundTransfer(Transaction transaction) {
+		LocalDate currentDate = LocalDate.now();
+		
+		transaction.settDate(currentDate);
+		String t1=transaction.gettType();
+		transaction.settType(t1);
+		this.transactionDao.save(transaction);
+		
+		
+		return "Transaction completed successfully";
+	}
+
+	@Override
+	public List<Transaction> getTransactionByClientId(Integer clientId) {
+		List<Transaction> list = new ArrayList<>();
+		list = this.transactionDao.findAll();
+		List<Transaction> transaction = new ArrayList<>();
+		for(Transaction t:list) {
+			if(t.getClientId()==clientId) {
+				transaction.add(t);
+			}
+		}
+		
+		return transaction;
+	}
+
 
 }

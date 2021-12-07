@@ -15,4 +15,10 @@ public interface TransactionServices {
 	public Object updateTransaction(Transaction tx, int id);
 	
 	public String deleteTransaction(int id);
+
+	List<Transaction> getTransactionByAgentId(Integer agentId);
+
+	String fundTransfer(Transaction transaction);
+
+	List<Transaction> getTransactionByClientId(Integer clientId);
 }
